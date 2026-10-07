@@ -1,0 +1,679 @@
+Index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Dough by Less - Tarjeta de Fidelidad</title>
+    <style>
+        :root {
+            --bg-main: #D4A3A5;
+            --sec-1: #6B3840;
+            --sec-2: #98616B;
+            --sec-3: #E8C4C6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--sec-3);
+            color: var(--sec-1);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--sec-1);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .slogan {
+            font-size: 0.95rem;
+            color: var(--sec-2);
+            font-style: italic;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(107, 56, 64, 0.12);
+            padding: 24px;
+            border: 2px solid var(--sec-3);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed var(--sec-3);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .client-info h3 {
+            color: var(--sec-1);
+            font-size: 1.2rem;
+        }
+
+        .client-info p {
+            font-size: 0.8rem;
+            color: var(--sec-2);
+        }
+
+        .badge-id {
+            background-color: var(--sec-3);
+            color: var(--sec-1);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .progress-counter {
+            text-align: center;
+            font-weight: bold;
+            color: var(--sec-1);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .cookies-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cookie-slot {
+            aspect-ratio: 1;
+            background-color: var(--sec-3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 1.3rem;
+            opacity: 0.5;
+        }
+
+        .cookie-slot.active {
+            background-color: var(--sec-2);
+            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(152, 97, 107, 0.5);
+            animation: brillo 0.6s ease;
+        }
+
+        @keyframes brillo {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.15); filter: brightness(1.3); }
+            100% { transform: scale(1.05); filter: brightness(1); }
+        }
+
+        .rewards-box {
+            background-color: var(--sec-3);
+            border-radius: 16px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--sec-1);
+        }
+
+        .rewards-box h4 {
+            margin-bottom: 6px;
+            color: var(--sec-1);
+            font-size: 0.9rem;
+        }
+
+        .rewards-box ul {
+            padding-left: 18px;
+        }
+
+        .rewards-box li {
+            margin-bottom: 4px;
+        }
+
+        .history-section {
+            font-size: 0.85rem;
+            color: var(--sec-1);
+            background-color: #faf5f5;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .history-section h4 {
+            margin-bottom: 6px;
+            color: var(--sec-2);
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            background-color: var(--sec-1);
+            color: #ffffff;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: var(--sec-2);
+        }
+
+        button.secondary {
+            background-color: var(--bg-main);
+            color: var(--sec-1);
+        }
+
+        button.secondary:hover {
+            background-color: var(--sec-3);
+        }
+
+        .admin-panel {
+            width: 100%;
+            max-width: 480px;
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(107, 56, 64, 0.12);
+            border: 2px solid var(--sec-3);
+        }
+
+        .admin-panel h3 {
+            color: var(--sec-1);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid var(--sec-3);
+            border-radius: 12px;
+            outline: none;
+            color: var(--sec-1);
+            font-size: 0.9rem;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--sec-2);
+        }
+
+        .client-list {
+            max-height: 180px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .client-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--sec-3);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .client-item span {
+            color: var(--sec-1);
+            font-weight: 600;
+        }
+
+        .client-item small {
+            color: var(--sec-2);
+            display: block;
+        }
+
+        .btn-small {
+            background-color: var(--sec-1);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-small:hover {
+            background-color: var(--sec-2);
+        }
+
+        /* Modal simple */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(107, 56, 64, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            border: 2px solid var(--sec-3);
+        }
+
+        .modal-content h3 {
+            color: var(--sec-1);
+            margin-bottom: 15px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .celebration-msg {
+            display: none;
+            background-color: var(--sec-2);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            animation: brillo 1s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Cookie Dough by Less</h1>
+        <p class="slogan">Todo siempre va mejor con algo dulce</p>
+    </header>
+
+    <!-- TARJETA ACTIVA -->
+    <div class="container" id="cardContainer">
+        <div class="card-header">
+            <div class="client-info">
+                <h3 id="clientNameDisp">Cargando clienta...</h3>
+                <p id="clientDateDisp">Creada el: --/--/----</p>
+            </div>
+            <div class="badge-id" id="clientIDDisp">ID: ----</div>
+        </div>
+
+        <div class="celebration-msg" id="celebrationMsg">
+            ¡Felicidades hermosa! Has alcanzado tu recompensa 🍪✨
+        </div>
+
+        <div class="progress-counter" id="progressCounter">Progreso: 0 de 10 servicios</div>
+
+        <div class="cookies-grid" id="cookiesGrid">
+            <!-- Se generan dinámicamente con JS -->
+        </div>
+
+        <div class="rewards-box">
+            <h4>🎁 Recompensas Activas:</h4>
+            <ul>
+                <li><strong>Servicio 5:</strong> 10% de descuento en paquete de 6 galletas clásicas</li>
+                <li><strong>Servicio 10:</strong> 1 galleta clásica gratis 🍪</li>
+            </ul>
+        </div>
+
+        <div class="history-section" id="historySection">
+            <h4>📂 Historial de Visitas:</h4>
+            <ul id="historyList" style="padding-left: 16px;">
+                <li>Sin compras registradas aún.</li>
+            </ul>
+        </div>
+
+        <div class="actions-bar">
+            <button onclick="promptNewCard()">➕ Crear nueva tarjeta</button>
+            <button class="secondary" onclick="requestAdminAction('stamp')">✨ Sellar Servicio (Admin)</button>
+        </div>
+    </div>
+
+    <!-- PANEL ADMIN PRIVADO -->
+    <div class="admin-panel">
+        <h3>
+            <span>🔐 Panel de Administradora</span>
+            <button class="btn-small" onclick="toggleAdminSearch()">Ver Clientes</button>
+        </h3>
+        <div id="adminControls" style="display: none; margin-top: 15px;">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar por nombre o ID..." oninput="filterClients()">
+                <button class="secondary" style="flex: 0 0 auto; padding: 10px 14px;" onclick="clearSearch()">Limpiar</button>
+            </div>
+            <div class="client-list" id="clientListContainer">
+                <!-- Lista de clientes cargada por JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PIN -->
+    <div class="modal" id="pinModal">
+        <div class="modal-content">
+            <h3>Ingresa tu PIN de Administradora</h3>
+            <input type="password" id="pinInput" placeholder="PIN (Ej: 2004)" maxlength="4">
+            <div class="modal-buttons">
+                <button class="secondary" onclick="closePinModal()">Cancelar</button>
+                <button onclick="verifyPin()">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL NUEVA TARJETA -->
+    <div class="modal" id="newCardModal">
+        <div class="modal-content">
+            <h3>Nueva Tarjeta de Clienta</h3>
+            <input type="text" id="newClientNameInput" placeholder="Nombre de la clienta">
+            <div class="modal-buttons">
+                <button class="secondary" onclick="closeNewCardModal()">Cancelar</button>
+                <button onclick="createNewCard()">Crear</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estructura de Datos y Estado Local
+        let clients = JSON.parse(localStorage.getItem('cookie_clients')) || [];
+        let currentClientIndex = clients.length > 0 ? 0 : null;
+        let pendingAction = null; // 'stamp' o 'edit'
+
+        // Datos iniciales de prueba si no hay nada
+        if (clients.length === 0) {
+            const sampleClient = {
+                id: 'CDL-' + Math.floor(1000 + Math.random() * 9000),
+                name: 'Mariana López',
+                date: new Date().toLocaleDateString('es-MX'),
+                services: 4,
+                history: ['02/10/2026', '04/10/2026', '05/10/2026', '06/10/2026']
+            };
+            clients.push(sampleClient);
+            currentClientIndex = 0;
+            saveData();
+        }
+
+        function saveData() {
+            localStorage.setItem('cookie_clients', JSON.stringify(clients));
+        }
+
+        // Renderizado de la tarjeta actual
+        function renderCard() {
+            if (currentClientIndex === null || clients.length === 0) return;
+            const client = clients[currentClientIndex];
+
+            document.getElementById('clientNameDisp').innerText = client.name;
+            document.getElementById('clientDateDisp').innerText = `Creada el: ${client.date}`;
+            document.getElementById('clientIDDisp').innerText = `ID: ${client.id}`;
+            document.getElementById('progressCounter').innerText = `Progreso: ${client.services} de 10 servicios`;
+
+            // Mensaje de celebración si llega a 10
+            const celebMsg = document.getElementById('celebrationMsg');
+            if (client.services >= 10) {
+                celebMsg.style.display = 'block';
+            } else {
+                celebMsg.style.display = 'none';
+            }
+
+            // Renderizar los 10 espacios de galletas
+            const grid = document.getElementById('cookiesGrid');
+            grid.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'cookie-slot';
+                if (i <= client.services) {
+                    slot.classList.add('active');
+                    slot.innerHTML = '🍪';
+                } else {
+                    slot.innerHTML = '🍪';
+                }
+                grid.appendChild(slot);
+            }
+
+            // Renderizar Historial
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            if (client.history.length === 0) {
+                historyList.innerHTML = '<li>Sin compras registradas aún.</li>';
+            } else {
+                client.history.forEach(date => {
+                    const li = document.createElement('li');
+                    li.innerText = `Compra registrada el: ${date}`;
+                    historyList.appendChild(li);
+                });
+            }
+        }
+
+        // Sistema de PIN Administrador
+        function requestAdminAction(action, param = null) {
+            pendingAction = { type: action, param: param };
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinModal').style.display = 'flex';
+            document.getElementById('pinInput').focus();
+        }
+
+        function closePinModal() {
+            document.getElementById('pinModal').style.display = 'none';
+            pendingAction = null;
+        }
+
+        function verifyPin() {
+            const pin = document.getElementById('pinInput').value;
+            if (pin === '2004') {
+                closePinModal();
+                executePendingAction();
+            } else {
+                alert('PIN incorrecto. Intenta de nuevo.');
+                document.getElementById('pinInput').value = '';
+            }
+        }
+
+        function executePendingAction() {
+            if (!pendingAction) return;
+
+            if (pendingAction.type === 'stamp') {
+                addServiceToCurrent();
+            } else if (pendingAction.type === 'edit') {
+                editClientName(pendingAction.param);
+            }
+        }
+
+        // Marcar Servicio (Sello digital)
+        function addServiceToCurrent() {
+            const client = clients[currentClientIndex];
+            if (client.services >= 10) {
+                if (confirm('Esta tarjeta ya completó 10 servicios. ¿Deseas reiniciar la tarjeta para iniciar un nuevo ciclo?')) {
+                    client.services = 0;
+                    client.history = [];
+                    saveData();
+                    renderCard();
+                    return;
+                } else {
+                    return;
+                }
+            }
+
+            client.services += 1;
+            const today = new Date().toLocaleDateString('es-MX');
+            client.history.push(today);
+            saveData();
+            renderCard();
+
+            if (client.services === 10) {
+                alert('¡Felicidades hermosa! Has alcanzado tu recompensa 🍪✨ (1 galleta clásica gratis)');
+            } else if (client.services === 5) {
+                alert('¡Genial! La clienta ha alcanzado el Servicio 5 (10% de descuento en paquete de 6 galletas)');
+            }
+        }
+
+        // Crear Nueva Tarjeta
+        function promptNewCard() {
+            document.getElementById('newClientNameInput').value = '';
+            document.getElementById('newCardModal').style.display = 'flex';
+            document.getElementById('newClientNameInput').focus();
+        }
+
+        function closeNewCardModal() {
+            document.getElementById('newCardModal').style.display = 'none';
+        }
+
+        function createNewCard() {
+            const name = document.getElementById('newClientNameInput').value.trim();
+            if (!name) {
+                alert('Por favor ingresa el nombre de la clienta.');
+                return;
+            }
+
+            const newClient = {
+                id: 'CDL-' + Math.floor(1000 + Math.random() * 9000),
+                name: name,
+                date: new Date().toLocaleDateString('es-MX'),
+                services: 0,
+                history: []
+            };
+
+            clients.unshift(newClient);
+            currentClientIndex = 0;
+            saveData();
+            closeNewCardModal();
+            renderCard();
+            if(document.getElementById('adminControls').style.display === 'block') {
+                filterClients();
+            }
+        }
+
+        // Panel de Gestión de Clientes (Administrador)
+        function toggleAdminSearch() {
+            // Requiere PIN para abrir la lista de clientes
+            requestAdminAction('open_admin_list');
+        }
+
+        // Sobrescribimos temporalmente el manejador para la acción de abrir lista
+        const oldVerifyPin = verifyPin;
+        verifyPin = function() {
+            const pin = document.getElementById('pinInput').value;
+            if (pin === '2004') {
+                closePinModal();
+                if (pendingAction && pendingAction.type === 'open_admin_list') {
+                    const controls = document.getElementById('adminControls');
+                    controls.style.display = controls.style.display === 'none' ? 'block' : 'none';
+                    if (controls.style.display === 'block') {
+                        filterClients();
+                    }
+                } else {
+                    executePendingAction();
+                }
+            } else {
+                alert('PIN incorrecto. Intenta de nuevo.');
+                document.getElementById('pinInput').value = '';
+            }
+        };
+
+        function filterClients() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const container = document.getElementById('clientListContainer');
+            container.innerHTML = '';
+
+            const filtered = clients.filter(c => c.name.toLowerCase().includes(query) || c.id.toLowerCase().includes(query));
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: var(--sec-2); font-size:0.85rem; padding:10px;">No se encontraron clientas.</p>';
+                return;
+            }
+
+            filtered.forEach(client => {
+                const realIndex = clients.findIndex(c => c.id === client.id);
+                const item = document.createElement('div');
+                item.className = 'client-item';
+                item.innerHTML = `
+                    <div>
+                        <span>${client.name}</span>
+                        <small>ID: ${client.id} | Progreso: ${client.services}/10</small>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn-small" onclick="selectClient(${realIndex})">Ver</button>
+                        <button class="btn-small secondary" style="background-color:var(--bg-main); color:var(--sec-1);" onclick="requestAdminAction('edit', ${realIndex})">Editar</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            filterClients();
+        }
+
+        function selectClient(index) {
+            currentClientIndex = index;
+            renderCard();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function editClientName(index) {
+            const client = clients[index];
+            const newName = prompt('Editar nombre de la clienta:', client.name);
+            if (newName !== null && newName.trim() !== '') {
+                client.name = newName.trim();
+                saveData();
+                renderCard();
+                filterClients();
+            }
+        }
+
+        // Inicializar app al cargar
+        renderCard();
+    </script>
+</body>
+</html>
